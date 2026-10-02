@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import Providers from './providers';
+import CartRoot from '@/components/cart/CartRoot';
 import CustomCursor from '@/components/ui/CustomCursor';
 import ScrollMug from '@/components/ui/ScrollMug';
 import { brewInitScript } from '@/lib/brew';
@@ -50,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Providers>
-          {children}
+          <CartRoot>{children}</CartRoot>
           <ScrollMug />
           <CustomCursor />
         </Providers>

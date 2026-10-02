@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import SectionHeading from './ui/SectionHeading';
 import { ArrowIcon } from './ui/Icons';
+import AddToCartButton from './cart/AddToCartButton';
 
 type HourDrink = {
   name: string;
@@ -17,7 +18,7 @@ const drinks: HourDrink[] = [
   { name: 'Midnight Mocha', note: 'Dark chocolate, a double shot and a pinch of sea salt for the night owls.', price: 890, liquid: '#3B2416' },
   { name: 'Affogato', note: 'Vanilla gelato, drowned in hot espresso. Dessert, technically.', price: 850, liquid: '#E9DCC6', iced: true },
   { name: 'Iced Spanish Latte', note: 'Condensed milk, espresso and plenty of ice for the hottest hour.', price: 820, liquid: '#C49A72', iced: true },
-  { name: 'Karak Latte', note: 'The three o’clock chai break, made with espresso and slow-simmered spice.', price: 750, liquid: '#A86F45' },
+  { name: 'Signature Karak Latte', note: 'The three o’clock chai break, made with espresso and slow-simmered spice.', price: 750, liquid: '#A86F45' },
   { name: 'Saffron Cold Brew', note: 'Eighteen-hour cold brew with saffron cream, poured over ice.', price: 950, liquid: '#C08A3E', iced: true },
   { name: 'Cardamom Cappuccino', note: 'Velvet foam and green cardamom, ground fresh each morning.', price: 820, liquid: '#B07F59' },
   { name: 'Pistachio Latte', note: 'House pistachio paste, espresso and steamed milk. Sunset in a cup.', price: 880, liquid: '#A9A46E' },
@@ -228,9 +229,9 @@ export default function CoffeeClock() {
                   Back to now
                 </button>
               )}
-              <a href="#order" className="btn-gold ml-auto">
-                Order this
-              </a>
+              <AddToCartButton itemName={drink.name} variant="custom" className="btn-gold ml-auto">
+                Add to order
+              </AddToCartButton>
             </div>
           </div>
         </div>

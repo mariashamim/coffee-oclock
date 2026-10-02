@@ -3,7 +3,7 @@ import FloatingBeans from './ui/FloatingBeans';
 import Magnetic from './ui/Magnetic';
 import NewsletterForm from './ui/NewsletterForm';
 import { ArrowIcon } from './ui/Icons';
-import { site } from '@/lib/site';
+import Link from 'next/link';
 
 export default function CtaBanner() {
   return (
@@ -40,16 +40,10 @@ export default function CtaBanner() {
 
         <FadeIn delay={0.15} className="lg:col-span-5">
           <Magnetic className="w-full sm:w-auto">
-            <a
-              href={site.orderUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold group w-full"
-            >
-              Order Now
+            <Link href="/menu" className="btn-gold group w-full">
+              Start your order
               <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              <span className="sr-only">(opens in a new tab)</span>
-            </a>
+            </Link>
           </Magnetic>
           <div className="mt-10">
             <p className="text-sm text-foam/60">Or get the good news first:</p>

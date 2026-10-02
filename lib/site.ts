@@ -3,7 +3,6 @@ export const site = {
   name: 'Coffee O’Clock',
   tagline: 'Your daily ritual, perfected.',
   // Placeholder ordering link (WhatsApp). Swap for your ordering platform.
-  orderUrl: 'https://wa.me/924235770000',
   phone: '+92 42 3577 0000',
   phoneHref: 'tel:+924235770000',
   email: 'hello@coffeeoclock.pk',

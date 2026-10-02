@@ -77,10 +77,10 @@ export default function Hero() {
 
           <motion.div variants={item} className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Magnetic className="w-full sm:w-auto">
-              <a href="#order" className="btn-primary group w-full">
+              <Link href="/menu" className="btn-primary group w-full">
                 Order Now
                 <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
+              </Link>
             </Magnetic>
             <Magnetic className="w-full sm:w-auto">
               <Link href="/menu" className="btn-secondary w-full">

@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Logo from './ui/Logo';
 import Magnetic from './ui/Magnetic';
 import BrewToggle from './ui/BrewToggle';
+import CartButton from './cart/CartButton';
 import { site } from '@/lib/site';
 
 export default function Navbar() {
@@ -61,10 +62,11 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3 lg:gap-5">
           <BrewToggle />
-          <Magnetic className="hidden sm:inline-flex" strength={0.25}>
-            <a href="#order" className="btn-primary px-6 py-3">
+          <CartButton />
+          <Magnetic className="hidden lg:inline-flex" strength={0.25}>
+            <Link href="/menu" className="btn-primary px-6 py-3">
               Order Now
-            </a>
+            </Link>
           </Magnetic>
           <button
             type="button"
@@ -114,9 +116,9 @@ export default function Navbar() {
                 </li>
               ))}
               <li className="pt-6">
-                <a href="#order" onClick={() => setOpen(false)} className="btn-primary w-full">
+                <Link href="/menu" onClick={() => setOpen(false)} className="btn-primary w-full">
                   Order Now
-                </a>
+                </Link>
               </li>
             </ul>
           </motion.div>

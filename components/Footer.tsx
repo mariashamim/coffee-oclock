@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Logo from './ui/Logo';
 import NewsletterForm from './ui/NewsletterForm';
 import { socialIcons } from './ui/Icons';
@@ -47,9 +48,9 @@ export default function Footer() {
                 </li>
               ))}
               <li>
-                <a href="#order" className="link-underline text-espresso/80 hover:text-espresso">
+                <Link href="/menu" className="link-underline text-espresso/80 hover:text-espresso">
                   Order Now
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

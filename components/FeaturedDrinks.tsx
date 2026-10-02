@@ -3,6 +3,7 @@ import Link from 'next/link';
 import FadeIn from './ui/FadeIn';
 import SectionHeading from './ui/SectionHeading';
 import Tilt from './ui/Tilt';
+import AddToCartButton from './cart/AddToCartButton';
 import { unsplash } from '@/lib/site';
 
 const drinks = [
@@ -90,12 +91,7 @@ export default function FeaturedDrinks() {
               <FadeIn delay={i * 0.08} className="h-full">
                 <article className="group h-full transition-transform duration-500 ease-out hover:-translate-y-2 motion-reduce:hover:translate-y-0">
                   <Tilt className="aspect-[4/5] overflow-hidden bg-cream-deep shadow-[0_0_0_rgba(43,27,18,0)] transition-shadow duration-500 group-hover:shadow-[0_30px_60px_-25px_rgba(43,27,18,0.45)]">
-                    <a
-                      href="#order"
-                      data-cursor="Order"
-                      aria-label={`Order a ${drink.name}`}
-                      className="absolute inset-0 z-[2]"
-                    />
+                    <AddToCartButton itemName={drink.name} variant="overlay" />
                     <Image
                       src={unsplash(drink.image, 900)}
                       alt={drink.alt}

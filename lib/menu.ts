@@ -16,6 +16,7 @@ export type MenuCategory = {
   title: string;
   blurb: string;
   image: string; // Unsplash photo id
+  customizable?: boolean; // coffee drinks get size, milk and extras
   alt: string;
   items: MenuItem[];
 };
@@ -30,6 +31,7 @@ export const tagLabels: Record<Tag, string> = {
 export const menu: MenuCategory[] = [
   {
     id: 'espresso-bar',
+    customizable: true,
     title: 'Espresso Bar',
     blurb: 'Our house blend, pulled to order. Medium roast, with notes of cocoa, toasted almond and a little dried cherry.',
     image: '1511920170033-f8396924c348',
@@ -47,6 +49,7 @@ export const menu: MenuCategory[] = [
   },
   {
     id: 'signatures',
+    customizable: true,
     title: 'Signatures',
     blurb: 'The drinks we’re known for. Specialty coffee, with flavours we grew up on.',
     image: '1541167760496-1628856ab772',
@@ -62,6 +65,7 @@ export const menu: MenuCategory[] = [
   },
   {
     id: 'cold-iced',
+    customizable: true,
     title: 'Cold & Iced',
     blurb: 'For Lahore summers, and honestly most of spring and autumn too.',
     image: '1578314675249-a6910f80cc4e',
@@ -127,3 +131,46 @@ export const addOns = [
   { name: 'Vanilla, caramel or hazelnut syrup', price: 120 },
   { name: 'Make it iced', price: 0 },
 ];
+
+// ---------- Ordering ----------
+
+export const slugify = (s: string) =>
+  s
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[’']/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+export type MenuEntry = MenuItem & { id: string; categoryId: string; customizable: boolean };
+
+export const menuItems: MenuEntry[] = menu.flatMap((c) =>
+  c.items.map((i) => ({ ...i, id: slugify(i.name), categoryId: c.id, customizable: Boolean(c.customizable) })),
+);
+
+export const findItem = (id: string) => menuItems.find((i) => i.id === id);
+
+export type Option = { id: string; label: string; price: number };
+
+export const sizeOptions: Option[] = [
+  { id: 'regular', label: 'Regular', price: 0 },
+  { id: 'large', label: 'Large', price: 150 },
+];
+
+export const milkOptions: Option[] = [
+  { id: 'whole', label: 'Whole milk', price: 0 },
+  { id: 'oat', label: 'Oat milk', price: 150 },
+  { id: 'almond', label: 'Almond milk', price: 150 },
+];
+
+export const extraOptions: Option[] = [
+  { id: 'shot', label: 'Extra shot', price: 200 },
+  { id: 'vanilla', label: 'Vanilla syrup', price: 120 },
+  { id: 'caramel', label: 'Caramel syrup', price: 120 },
+];
+
+export const DELIVERY_FEE = 250;
+export const FREE_DELIVERY_OVER = 3000;
+
+export const formatPKR = (n: number) => `PKR ${n.toLocaleString('en-PK')}`;

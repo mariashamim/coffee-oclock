@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import FadeIn from '../ui/FadeIn';
+import AddToCartButton from '../cart/AddToCartButton';
 import { addOns, menu, tagLabels, type MenuItem, type Temp } from '@/lib/menu';
 import { unsplash } from '@/lib/site';
 
@@ -54,7 +55,10 @@ function Item({ item }: { item: MenuItem }) {
         <span aria-hidden="true" className="mx-1 min-w-[1.5rem] flex-1 -translate-y-1 border-b border-dotted border-espresso/30" />
         <p className="shrink-0 text-sm font-medium text-terracotta">{formatPKR(item.price)}</p>
       </div>
-      <p className="mt-2 text-sm leading-relaxed text-espresso/70">{item.description}</p>
+      <div className="mt-2 flex items-start justify-between gap-4">
+        <p className="text-sm leading-relaxed text-espresso/70">{item.description}</p>
+        <AddToCartButton itemName={item.name} className="mt-0.5" />
+      </div>
       {item.tags && item.tags.length > 0 && (
         <ul className="mt-3 flex flex-wrap gap-2" aria-label="Labels">
           {item.tags.map((tag) => (
