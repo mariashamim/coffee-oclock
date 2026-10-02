@@ -4,16 +4,9 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { describeOptions, unitPrice, useCart, type CartLine } from '@/lib/cart';
 import { DELIVERY_FEE, findItem, formatPKR, FREE_DELIVERY_OVER } from '@/lib/menu';
+import { cities, findLocation, flagship, locations } from '@/lib/locations';
 
 type Mode = 'pickup' | 'delivery';
-
-const branches = [
-  { id: 'lahore', name: 'Lahore · MM Alam Road', address: '42-C, MM Alam Road, Gulberg III' },
-  { id: 'karachi', name: 'Karachi · DHA Phase 6', address: 'Khayaban-e-Ittehad, DHA Phase 6' },
-  { id: 'islamabad', name: 'Islamabad · Kohsar Market', address: 'Kohsar Market, F-6/3' },
-];
-
-const cities = ['Lahore', 'Karachi', 'Islamabad'];
 
 const payments: Record<Mode, { id: string; label: string; hint: string }[]> = {
   pickup: [
@@ -108,7 +101,7 @@ export default function Checkout() {
     address: '',
     area: '',
     city: 'Lahore',
-    branch: 'lahore',
+    branch: flagship.id,
     time: 'asap',
     payment: 'counter',
     notes: '',
@@ -165,7 +158,8 @@ export default function Checkout() {
     setSubmitting(true);
     // Sample site: there's no backend, so we simulate the order being sent.
     window.setTimeout(() => {
-      const branch = branches.find((b) => b.id === form.branch)!;
+      const b = findLocation(form.branch) ?? flagship;
+      const branch = { name: `our ${b.name} branch, ${b.address}, ${b.city}` };
       setPlaced({
         orderNo: `CO-${Math.floor(10000 + Math.random() * 90000)}`,
         firstName: form.name.trim().split(/\s+/)[0],
@@ -301,10 +295,16 @@ export default function Checkout() {
                     onChange={(e) => set('branch')(e.target.value)}
                     className={`${inputClass()} bg-cream`}
                   >
-                    {branches.map((b) => (
-                      <option key={b.id} value={b.id}>
-                        {b.name}: {b.address}
-                      </option>
+                    {cities.map((c) => (
+                      <optgroup key={c} label={c}>
+                        {locations
+                          .filter((l) => l.city === c)
+                          .map((l) => (
+                            <option key={l.id} value={l.id}>
+                              {l.name}: {l.address}
+                            </option>
+                          ))}
+                      </optgroup>
                     ))}
                   </select>
                 </Field>

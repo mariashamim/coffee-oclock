@@ -3,6 +3,7 @@ import Logo from './ui/Logo';
 import NewsletterForm from './ui/NewsletterForm';
 import { socialIcons } from './ui/Icons';
 import { site } from '@/lib/site';
+import { cities, locations } from '@/lib/locations';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -59,9 +60,17 @@ export default function Footer() {
             <h2 className="text-xs font-medium uppercase tracking-eyebrow text-terracotta">Say salaam</h2>
             <address className="mt-5 space-y-3 not-italic text-espresso/80">
               <p>
-                {site.address.line1}
-                <br />
-                {site.address.line2}
+                {locations.length} cafés across{' '}
+                {cities.map((c, i) => (
+                  <span key={c}>
+                    {i > 0 && (i === cities.length - 1 ? ' and ' : ', ')}
+                    {c}
+                  </span>
+                ))}
+                .{' '}
+                <Link href="/#locations" className="link-underline text-terracotta">
+                  Find one
+                </Link>
               </p>
               <p>
                 <a href={site.phoneHref} className="link-underline">
