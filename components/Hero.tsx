@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, useTransform, type Variants } from 'framer-motion';
 import { ArrowIcon } from './ui/Icons';
 import ClockBadge from './ui/ClockBadge';
@@ -82,9 +83,9 @@ export default function Hero() {
               </a>
             </Magnetic>
             <Magnetic className="w-full sm:w-auto">
-              <a href="#menu" className="btn-secondary w-full">
+              <Link href="/menu" className="btn-secondary w-full">
                 View Menu
-              </a>
+              </Link>
             </Magnetic>
           </motion.div>
 

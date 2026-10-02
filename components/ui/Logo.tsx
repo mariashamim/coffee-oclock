@@ -1,13 +1,14 @@
+import Link from 'next/link';
 import { site } from '@/lib/site';
 
 export default function Logo({ className = '' }: { className?: string }) {
   return (
-    <a
-      href="#top"
-      aria-label={`${site.name}, back to top`}
+    <Link
+      href="/"
+      aria-label={`${site.name}, home`}
       className={`font-serif text-2xl leading-none tracking-tight ${className}`}
     >
       Coffee <span className="italic">O’Clock</span>
-    </a>
+    </Link>
   );
 }

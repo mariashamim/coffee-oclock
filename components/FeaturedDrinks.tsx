@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import FadeIn from './ui/FadeIn';
 import SectionHeading from './ui/SectionHeading';
 import Tilt from './ui/Tilt';
@@ -74,12 +75,12 @@ export default function FeaturedDrinks() {
             description="Four cups we’d make for a friend. Each one built on single-origin espresso and a little bit of home."
           />
           <FadeIn delay={0.1}>
-            <a
-              href="#order"
+            <Link
+              href="/menu"
               className="link-underline inline-flex text-sm font-medium tracking-wide text-terracotta"
             >
               See the full menu
-            </a>
+            </Link>
           </FadeIn>
         </div>
 

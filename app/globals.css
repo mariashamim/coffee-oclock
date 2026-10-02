@@ -135,6 +135,19 @@
     animation: steam-rise 2.8s ease-out infinite;
   }
 
+  /* Small ink-coloured wisps for the cup icons on the full menu page */
+  .steam-ink > span {
+    width: 3px;
+    height: 0.9rem;
+    background: linear-gradient(to top, transparent, rgb(var(--terracotta) / 0.7), transparent);
+    filter: blur(0.8px);
+  }
+
+  .group:hover .steam-ink > span,
+  .group:focus-within .steam-ink > span {
+    animation: wisp 1.8s ease-out infinite;
+  }
+
   /* ---------- Bubbles: the iced drink fizzes instead of steaming ---------- */
   .bubbles > span {
     @apply absolute bottom-0 block rounded-full border border-white/80 opacity-0;
@@ -217,6 +230,20 @@
   100% {
     opacity: 0;
     transform: translateY(-52px) translateX(-4px) scaleX(1.7);
+  }
+}
+
+@keyframes wisp {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scaleY(0.6);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-12px) translateX(2px) scaleY(1.2);
   }
 }
 

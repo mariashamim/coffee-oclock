@@ -18,9 +18,9 @@ export const site = {
     { days: 'Saturday – Sunday', time: '9:00 am – 1:00 am' },
   ],
   nav: [
-    { href: '#menu', label: 'Menu' },
-    { href: '#about', label: 'About' },
-    { href: '#locations', label: 'Locations' },
+    { href: '/menu', label: 'Menu' },
+    { href: '/#about', label: 'About' },
+    { href: '/#locations', label: 'Locations' },
     { href: '#contact', label: 'Contact' },
   ],
   social: [

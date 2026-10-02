@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import Logo from './ui/Logo';
 import Magnetic from './ui/Magnetic';
@@ -10,6 +12,7 @@ import { site } from '@/lib/site';
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -38,16 +41,22 @@ export default function Navbar() {
         <Logo />
 
         <ul className="hidden items-center gap-6 md:flex lg:gap-10">
-          {site.nav.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="link-underline text-sm tracking-wide text-espresso/80 transition-colors hover:text-espresso"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {site.nav.map((link) => {
+            const current = link.href === pathname;
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  aria-current={current ? 'page' : undefined}
+                  className={`link-underline text-sm tracking-wide transition-colors hover:text-espresso ${
+                    current ? 'text-terracotta after:scale-x-100' : 'text-espresso/80'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex items-center gap-3 lg:gap-5">
@@ -92,13 +101,16 @@ export default function Navbar() {
             <ul className="container-x flex flex-col gap-1 pb-8 pt-2">
               {site.nav.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block border-b border-espresso/10 py-4 font-serif text-3xl"
+                    aria-current={link.href === pathname ? 'page' : undefined}
+                    className={`block border-b border-espresso/10 py-4 font-serif text-3xl ${
+                      link.href === pathname ? 'italic text-terracotta' : ''
+                    }`}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
               <li className="pt-6">
