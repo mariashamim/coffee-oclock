@@ -15,6 +15,15 @@ All built with CSS animations and plain React (no extra libraries):
 
 Everything respects the visitor's "reduce motion" setting.
 
+## Ordering (sample)
+
+- `/menu` lists every item with an add button. Coffee drinks open a customizer (size, milk, extras).
+- The cart lives in `lib/cart.tsx` and is saved in the visitor's browser.
+- `/checkout` handles pickup or delivery, contact details, time slots and payment choice, then shows a confirmation.
+- **Orders are simulated.** Nothing is sent anywhere and no payment is taken. To make it real, replace the
+  `setTimeout` in `components/checkout/Checkout.tsx` with a call to your backend or ordering service.
+- Delivery fee and the free-delivery threshold are in `lib/menu.ts` (`DELIVERY_FEE`, `FREE_DELIVERY_OVER`).
+
 ## Getting started
 
 Requires **Node.js 18.17+**.
