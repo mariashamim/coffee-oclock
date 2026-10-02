@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Palette as RGB channels so Tailwind opacity modifiers (bg-cream/80) keep working. */
+  :root {
+    --cream: 250 246 240; /* #FAF6F0 */
+    --cream-deep: 242 234 223;
+    --espresso: 43 27 18; /* #2B1B12 */
+    --espresso-soft: 74 53 39;
+    --roast: 43 27 18;
+    --foam: 250 246 240;
+    --coffee: 111 66 40; /* liquid coffee in the mug */
+    --gold: 201 162 39; /* #C9A227 */
+    --terracotta: 180 83 42; /* #B4532A */
+    color-scheme: light;
+  }
+
+  /* Dark roast: page surfaces go deep brown, ink goes to warm foam. */
+  [data-brew='dark'] {
+    --cream: 24 16 11;
+    --cream-deep: 34 23 16;
+    --espresso: 243 233 220;
+    --espresso-soft: 214 196 176;
+    --roast: 14 9 6;
+    --foam: 243 233 220;
+    --coffee: 150 96 60;
+    --gold: 214 176 58;
+    --terracotta: 218 124 82;
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-cream font-sans text-espresso antialiased;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-espresso;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-terracotta ring-offset-2 ring-offset-cream;
+  }
+
+  /* Briefly added while switching brew mode so colours cross-fade instead of snapping. */
+  html.brew-transition,
+  html.brew-transition *,
+  html.brew-transition *::before,
+  html.brew-transition *::after {
+    transition:
+      background-color 0.6s ease,
+      color 0.6s ease,
+      border-color 0.6s ease,
+      fill 0.6s ease,
+      stroke 0.6s ease !important;
+  }
+
+  /* The custom cursor (components/ui/CustomCursor.tsx) replaces the arrow on mouse devices. */
+  @media (hover: hover) and (pointer: fine) {
+    html.has-custom-cursor,
+    html.has-custom-cursor * {
+      cursor: none !important;
+    }
+
+    html.has-custom-cursor :is(input, textarea, select) {
+      cursor: text !important;
+    }
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-eyebrow text-terracotta;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 ease-out;
+  }
+
+  .btn-primary {
+    @apply btn bg-espresso text-cream hover:bg-terracotta;
+  }
+
+  .btn-secondary {
+    @apply btn border border-espresso/25 text-espresso hover:border-espresso hover:bg-espresso hover:text-cream;
+  }
+
+  .btn-gold {
+    @apply btn bg-gold text-roast hover:bg-foam;
+  }
+
+  .link-underline {
+    @apply relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100;
+  }
+
+  /* ---------- Steam: wisps rise from a hovered menu card (.group) ---------- */
+  .steam > span {
+    @apply absolute bottom-0 block w-3 rounded-full opacity-0;
+    height: 3.5rem;
+    background: linear-gradient(to top, rgb(255 255 255 / 0), rgb(255 255 255 / 0.85), rgb(255 255 255 / 0));
+    filter: blur(5px);
+  }
+
+  .steam > span:nth-child(1) {
+    left: 30%;
+  }
+  .steam > span:nth-child(2) {
+    left: 47%;
+    animation-delay: 0.7s !important;
+  }
+  .steam > span:nth-child(3) {
+    left: 64%;
+    animation-delay: 1.4s !important;
+  }
+
+  .steam-on > span,
+  .group:hover .steam > span,
+  .group:focus-within .steam > span {
+    animation: steam-rise 2.8s ease-out infinite;
+  }
+
+  /* ---------- Bubbles: the iced drink fizzes instead of steaming ---------- */
+  .bubbles > span {
+    @apply absolute bottom-0 block rounded-full border border-white/80 opacity-0;
+  }
+
+  .group:hover .bubbles > span,
+  .group:focus-within .bubbles > span {
+    animation: bubble-rise 2.2s ease-in infinite;
+  }
+
+  /* ---------- Scroll mug ---------- */
+  .mug-liquid {
+    transform: translateY(calc((1 - var(--fill, 0)) * 34px));
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mug-wave {
+    animation: wave-slide 3s linear infinite;
+  }
+
+  .mug-steam > span {
+    @apply absolute bottom-0 block w-1.5 rounded-full opacity-0;
+    height: 1.4rem;
+    background: linear-gradient(to top, transparent, rgb(var(--espresso) / 0.45), transparent);
+    filter: blur(1.5px);
+    animation: steam-rise 2.4s ease-out infinite;
+  }
+
+  .mug-steam > span:nth-child(2) {
+    animation-delay: 0.8s;
+  }
+  .mug-steam > span:nth-child(3) {
+    animation-delay: 1.6s;
+  }
+
+  /* ---------- Coffee O'Clock dial ---------- */
+  /* The dial and its counter-rotating hour buttons share one timing so numbers stay upright. */
+  .dial-spin {
+    transition:
+      transform 0.9s cubic-bezier(0.65, 0, 0.35, 1),
+      background-color 0.3s ease,
+      color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .cup-fill {
+    transition: fill 0.9s ease;
+  }
+
+  .drink-swap {
+    animation: drink-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .steam > span,
+    .bubbles > span,
+    .mug-wave,
+    .mug-steam > span,
+    .drink-swap {
+      animation: none !important;
+    }
+    .mug-liquid,
+    .dial-spin {
+      transition: none;
+    }
+  }
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scaleX(1);
+  }
+  20% {
+    opacity: 0.9;
+  }
+  60% {
+    transform: translateY(-26px) translateX(5px) scaleX(1.35);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-52px) translateX(-4px) scaleX(1.7);
+  }
+}
+
+@keyframes bubble-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(1);
+  }
+}
+
+@keyframes wave-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes drink-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
